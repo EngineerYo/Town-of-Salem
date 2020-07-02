@@ -9,30 +9,23 @@
 </head>
 
 <body>
-	<div class='page col-sm'>
+	<div class='page'>
 		<div class='modeSelector'>
-			<div class='dropdown'>
-				<button class='btn btn-sm btn-secondary dropdown-toggle' type='button' data-toggle='dropdown'>Game Mode</button>
+			<select class='dropDown'>
 				<div class='dropdown-menu'>
-					<button class='dropdown-item'>Classic</button>
-					<button class='dropdown-item'>Ranked Practice</button>
-					<button class='dropdown-item'>Ranked</button>
-					<div class='dropdown-divider'></div>
-					<button class='dropdown-item'>All Any</button>
-					<button class='dropdown-item'>Rainbow</button>
-					<button class='dropdown-item'>Dracula's Palace</button>
-					<button class='dropdown-item'>Town Traitor</button>
+					<option value='Classic'>Classic</option>
+					<option value='Ranked Practice'>Ranked Practice</option>
+					<option value='Ranked'>Ranked</option>
+					<option value='All Any'>All Any</option>
+					<option value='Rainbow'>Rainbow</option>
+					<option value='Dracula's Palace'>Dracula's Palace</option>
+					<option value='Town Traitor'>Town Traitor</option>
 				</div>
-			</div>
+			</select>
 		</div>
-		<div class='row justify-content-center'>
-			<div class='buttons col' id='buttons'>
-				<div class='btn-group-vertical'>
-					<button type='button' class='btn btn-sm btn-primary'>Investigator</button>
-				</div>
-			</div>
-			<div class='data col' id='data'></div>
-		</div>
+
+		<div class='buttons' id='buttons'></div>
+		<div class='data' id='data'></div>
 	</div>
 	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
