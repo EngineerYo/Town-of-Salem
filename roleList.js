@@ -32,182 +32,244 @@ let colorLookup = {
 	'Neutral': 				'#999999'
 }
 
+let groupLookup = [
+	'Town Investigative',
+	'Town Killing',
+	'Town Protective',
+	'Town Support',
+
+	'Mafia Deception',
+	'Mafia Killing',
+	'Mafia Support',
+	
+	'Neutral Benign',
+	'Neutral Chaos',
+	'Neutral Evil',
+	'Neutral Killing'
+]
+
 let roleLookup = {
 	'Investigator': {
 		partOf: ['Any', 'Random Town', 'Town Investigative'],
 		team:	'Town',
-		color:	colorLookup['Town']
+		color: 	'Town',
+		group:	'Town Investigative'
 	},
 	'Lookout': {
 		partOf: ['Any', 'Random Town', 'Town Investigative'],
 		team:	'Town',
-		color:	colorLookup['Town']
+		color: 	'Town',
+		group:	'Town Investigative'
 	},
 	'Sheriff': {
 		partOf: ['Any', 'Random Town', 'Town Investigative'],
 		team:	'Town',
-		color:	colorLookup['Town']
+		color: 	'Town',
+		group:	'Town Investigative'
 	},
 	'Spy': {
 		partOf: ['Any', 'Random Town', 'Town Investigative'],
 		team:	'Town',
-		color:	colorLookup['Town']
+		color: 	'Town',
+		group:	'Town Investigative'
 	},
 
 	'Jailor': {
 		partOf: ['Any', 'Random Town', 'Town Killing'],
 		team:	'Town',
-		color:	colorLookup['Town']
+		color: 	'Town',
+		group:	'Town Killing'
 	},
 	'Vampire Hunter': {
 		partOf: ['Any', 'Random Town', 'Town Killing'],
 		team:	'Town',
-		color:	colorLookup['Town']
+		color: 	'Town',
+		group:	'Town Killing'
 	},
 	'Veteran': {
 		partOf: ['Any', 'Random Town', 'Town Killing'],
 		team:	'Town',
-		color:	colorLookup['Town']
+		color: 	'Town',
+		group:	'Town Killing'
 	},
 	'Vigilante': {
 		partOf: ['Any', 'Random Town', 'Town Killing'],
 		team:	'Town',
-		color:	colorLookup['Town']
+		color: 	'Town',
+		group:	'Town Killing'
 	},
 
 	'Bodyguard': {
 		partOf: ['Any', 'Random Town', 'Town Protective'],
 		team:	'Town',
-		color:	colorLookup['Town']
+		color: 	'Town',
+		group:	'Town Protective'
 	},
 	'Doctor': {
 		partOf: ['Any', 'Random Town', 'Town Protective'],
 		team:	'Town',
-		color:	colorLookup['Town']
+		color: 	'Town',
+		group:	'Town Protective'
 	},
 	
 	'Escort': {
 		partOf: ['Any', 'Random Town', 'Town Support'],
 		team:	'Town',
-		color:	colorLookup['Town']
+		color: 	'Town',
+		group:	'Town Support'
 	},
 	'Mayor': {
 		partOf: ['Any', 'Random Town', 'Town Support'],
 		team:	'Town',
-		color:	colorLookup['Town']
+		color: 	'Town',
+		group:	'Town Support'
 	},
 	'Medium': {
 		partOf: ['Any', 'Random Town', 'Town Support'],
 		team:	'Town',
-		color:	colorLookup['Town']
+		color: 	'Town',
+		group:	'Town Support'
 	},
 	'Retributionist': {
 		partOf: ['Any', 'Random Town', 'Town Support'],
 		team:	'Town',
-		color:	colorLookup['Town']
+		color: 	'Town',
+		group:	'Town Support'
 	},
 	'Transporter': {
 		partOf: ['Any', 'Random Town', 'Town Support'],
 		team:	'Town',
-		color:	colorLookup['Town']
+		color: 	'Town',
+		group:	'Town Support'
 	},
 
 	'Disguiser': {
 		partOf: ['Any', 'Random Mafia', 'Mafia Deception'],
 		team:	'Mafia',
-		color:	colorLookup['Mafia']
+		color: 	'Mafia',
+		group:	'Mafia Deception'
 	},
 	'Forger': {
 		partOf: ['Any', 'Random Mafia', 'Mafia Deception'],
 		team:	'Mafia',
-		color:	colorLookup['Mafia']
+		color: 	'Mafia',
+		group:	'Mafia Deception'
 	},
 	'Framer': {
 		partOf: ['Any', 'Random Mafia', 'Mafia Deception'],
 		team:	'Mafia',
-		color:	colorLookup['Mafia']
+		color: 	'Mafia',
+		group:	'Mafia Deception'
 	},
 	'Janitor': {
 		partOf: ['Any', 'Random Mafia', 'Mafia Deception'],
 		team:	'Mafia',
-		color:	colorLookup['Mafia']
+		color: 	'Mafia',
+		group:	'Mafia Deception'
 	},
 
 	'Godfather': {
 		partOf: ['Any', 'Random Mafia', 'Mafia Killing'],
 		team:	'Mafia',
-		color:	colorLookup['Mafia']
+		color: 	'Mafia',
+		group:	'Mafia Killing'
 	},
 	'Mafioso': {
 		partOf: ['Any', 'Random Mafia', 'Mafia Killing'],
 		team:	'Mafia',
-		color:	colorLookup['Mafia']
+		color: 	'Mafia',
+		group:	'Mafia Killing'
 	},
 	
 	'Blackmailer': {
 		partOf: ['Any', 'Random Mafia', 'Mafia Support'],
 		team:	'Mafia',
-		color:	colorLookup['Mafia']
+		color: 	'Mafia',
+		group:	'Mafia Support'
 	},
 	'Consigliere': {
 		partOf: ['Any', 'Random Mafia', 'Mafia Support'],
 		team:	'Mafia',
-		color:	colorLookup['Mafia']
+		color: 	'Mafia',
+		group:	'Mafia Support'
 	},
 	'Consort': {
 		partOf: ['Any', 'Random Mafia', 'Mafia Support'],
 		team:	'Mafia',
-		color:	colorLookup['Mafia']
+		color: 	'Mafia',
+		group:	'Mafia Support'
 	},
 
 	'Amnesiac': {
 		partOf: ['Any', 'Random Neutral', 'Neutral Benign'],
-		team:	'Neutral Benign',
-		color:	colorLookup['Amnesiac']
+		team:	'Neutral',
+		color: 	'Amnesiac',
+		group:	'Neutral Benign'
 	},
 	'Survivor': {
 		partOf: ['Any', 'Random Neutral', 'Neutral Benign'],
-		team:	'Neutral Benign',
-		color:	colorLookup['Survivor']
+		team:	'Neutral',
+		color: 	'Survivor',
+		group:	'Neutral Benign'
 	},
 
 	'Vampire': {
 		partOf: ['Any', 'Random Neutral', 'Neutral Chaos'],
-		team:	'Neutral Chaos',
-		color:	colorLookup['Vampire']
+		team:	'Neutral',
+		color: 	'Vampire',
+		group:	'Neutral Chaos'
 	},
 
 	'Executioner': {
 		partOf: ['Any', 'Random Neutral', 'Neutral Evil'],
-		team:	'Neutral Evil',
-		color:	colorLookup['Executioner']
+		team:	'Neutral',
+		color: 	'Executioner',
+		group:	'Neutral Evil'
 	},
 	'Jester': {
 		partOf: ['Any', 'Random Neutral', 'Neutral Evil'],
-		team:	'Neutral Evil',
-		color:	colorLookup['Jester']
+		team:	'Neutral',
+		color: 	'Jester',
+		group:	'Neutral Evil'
 	},
 	'Witch': {
 		partOf: ['Any', 'Random Neutral', 'Neutral Evil'],
-		team:	'Neutral Evil',
-		color:	colorLookup['Witch']
+		team:	'Neutral',
+		color: 	'Witch',
+		group:	'Neutral Evil'
 	},
 
 	'Arsonist': {
 		partOf: ['Any', 'Random Neutral', 'Neutral Killing'],
-		team:	'Neutral Killing',
-		color:	colorLookup['Arsonist']
+		team:	'Neutral',
+		color: 	'Arsonist',
+		group:	'Neutral Killing'
 	},
 	'Serial Killer': {
 		partOf: ['Any', 'Random Neutral', 'Neutral Killing'],
-		team:	'Neutral Killing',
-		color:	colorLookup['Serial Killer']
+		team:	'Neutral',
+		color: 	'Serial Killer',
+		group:	'Neutral Killing'
 	},
 	'Werewolf': {
 		partOf: ['Any', 'Random Neutral', 'Neutral Killing'],
-		team:	'Neutral Killing',
-		color:	colorLookup['Werewolf']
+		team:	'Neutral',
+		color: 	'Werewolf',
+		group:	'Neutral Killing'
 	}
+}
+
+let wildcardLookup = {
+	'Random Town':			'Town',
+	'Town Investigative':	'Town',
+	'Town Killing':			'Town',
+	'Town Protective':		'Town',
+	'Town Support':			'Town',
+
+	'Random Mafia':			'Mafia',
+	'Mafia Deception':		'Mafia',
+	'Mafia Killing': 		'Mafia',
+	'Mafia Support':		'Mafia'
 }
 
 let gameModes = {
