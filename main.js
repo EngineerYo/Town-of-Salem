@@ -1,38 +1,80 @@
-var startTime
-var endTime
-var longClickDuration = 200
-
-let role = function(name) {
-
-	if (!lookup.includes(name)) {
-		return false
-	}
-
-	this.name = name
-	this.team = lookup[name].team
-	this.partOf = lookup[name].partOf
-
-	return this
-}
-
 let Page = function() {
-	this.mode = 'Town Traitor'
-	this.game = new Game(this.mode)
-	this.game.construct()
-
-	let page = this
-	let modeSelect = d3.select('.modeSelector').select('.dropDown')
-	modeSelect.on('change', function() {
-		let newMode = modeSelect.node().options[modeSelect.node().options.selectedIndex].value
-		page.mode = newMode
-		d3.select('.buttons').selectAll('*').remove()
-		d3.select('.data').selectAll('*').remove()
-
-		page.game = new Game(page.mode)
-		page.game.construct()
-	})
+	this.mode = 'Classic'
 }
 Page.prototype.construct = function() {
+	let page = this
+	
+	let currentTeam = null
+	let currentGroup = null
+	let currentButtonGroup = null
+
+	let buttonGroups = {}
+
+	// Create sidebar buttons
+	for (let role in roleLookup) {
+		let buttons = $(`.page .buttons`).get(0)
+
+		// Get team
+		let team = roleLookup[role].team
+		let group = roleLookup[role].group
+		let color = roleLookup[role].color
+		
+		let thisTopMargin = 0
+		let uID = `${team} ${group}`
+
+		if (buttonGroups[uID] === undefined) {
+			let topMargin = 1
+			if (team !== currentTeam && currentTeam !== null) {
+				topMargin = 3
+			}
+
+			currentGroup = group
+			currentTeam = team
+
+			let buttonGroup = document.createElement('div')
+				buttonGroup.className = `btn-group-vertical btn-group-sm mt-${topMargin}`
+				buttonGroup.id = uID
+
+			buttonGroups[uID] = buttonGroup
+		}
+
+		let button = document.createElement('button')
+			button.className = `btn btn-custom`
+			button.id = role
+			button.style.backgroundColor = colorLookup[color]
+			button.innerHTML = role
+			button.addEventListener('click', function() {
+				game.addRole(role)
+			})
+
+		buttonGroups[uID].appendChild(button)
+	}
+
+	for (let buttonGroup in buttonGroups) {
+		buttons.appendChild(buttonGroups[buttonGroup])
+	}
+
+	// Give click listeners to sidebar buttons
+	for (let role in roleLookup) {
+		$(`.page .buttons button:contains(${role})`).on('click', function() {
+			page.game.addRole(role)
+		})
+	}
+
+	// Give click listeners to dropdown buttons
+	for (let mode in gameModes) {
+		let button = $(`.page button:contains("${mode}")`)
+		button.on('click', function() {
+			let newMode = button.html()
+			page.mode = newMode
+			$(`.page .dropdown #text`).html(`${newMode}`)
+
+			page.game = new Game(page.mode)
+			page.game.construct()
+		})
+	}
+
+	// Set up game
 	this.game = new Game(this.mode)
 	this.game.construct()
 }
@@ -54,81 +96,92 @@ let Game = function(gameMode) {
 Game.prototype.construct = function() {
 	let game = this
 
-	let prevTeam = null
-	// Create button column
-	for (let role in roleLookup) {
-		let roleObj = roleLookup[role]
-		let roleTeam = roleLookup[role].team
+	$(`.page .data`).html('')
 
-		let offset = 0.5
-		if (prevTeam === null) {
-			prevTeam = roleTeam
-		}
-		if (prevTeam != roleTeam) {
-			prevTeam = roleTeam
-			offset = 6
-		}
+	let currentTeam = null
+	let currentGroup = null
+	let currentButtonGroup = null
 
-		let roleButton = `<button class='selector'>`
-		roleButton += role
-		roleButton += `</button>`
+	let buttonGroups = {}
 
-		d3.select('body').select('.buttons').append('Button')
-			.attr('class', 'selector')
-			.style('background-color', `${roleObj.color}`).style('margin-top', `${offset}px`)
-			.html(role)
-			.on('click', function() {
-				game.addRole(role)
-			})
-	}
-
-	// Create checklist column
 	for (let role in this.roles) {
+		let data = $(`.page .data .col`).get(0)
 		let roleName = this.roles[role].name
-		let roleObj = roleLookup[roleName]
 
-		let roleColor = null
+		// Get team
+		let team = null
 		if (roleLookup[roleName] === undefined) {
-			if (colorLookup[roleName] === undefined) {
-				console.log(`Need a color for ${roleName}`)
-
-				roleColor = '#FF0000'
-			}
-			else {
-				roleColor = colorLookup[roleName]
-			}
+			team = wildcardLookup[roleName]
 		}
 		else {
-			roleColor = roleLookup[roleName].color
+			team = roleLookup[roleName].team
 		}
-		d3.select('body').select('.data').append('div')
-			.attr('class', 'counterContainer')
-		let checklistContainer = d3.select('body').select('.counterContainer').append('button')
-			.attr('class', 'counter').attr('id', role)
-			.style('background-color', `${roleColor}`)
-			.on('click', function() {
+		// Get group
+		let group = null
+		if (roleLookup[roleName] !== undefined) {
+			group = roleLookup[roleName].group
+		}
+		else {
+			group = roleName
+		}
+		// Get color
+		let color = null
+		if (roleLookup[roleName] === undefined) {
+			color = colorLookup[roleName]
+		}
+		else {
+			color = colorLookup[roleLookup[roleName].color]
+		}
+		
+		let thisTopMargin = 0
+		let uID = `${team} ${group}`
+
+		if (buttonGroups[uID] === undefined) {
+			let topMargin = 1
+			if (team !== currentTeam && currentTeam !== null) {
+				topMargin = 3
+			}
+
+			currentGroup = group
+			currentTeam = team
+
+			let buttonGroup = document.createElement('div')
+				buttonGroup.className = `btn-group-vertical btn-group-sm mt-${topMargin}`
+				buttonGroup.id = uID
+
+			buttonGroups[uID] = buttonGroup
+		}
+
+		let button = document.createElement('button')
+			button.className = `btn btn-custom`
+			button.id = scrubName(role)
+			button.style.backgroundColor = color
+			button.addEventListener('click', function() {
 				game.subTarget(role)
 			})
 
-		checklistContainer.append('div')
-			.attr('id', 'name').attr('class', 'counter-name')
-			.html(this.roles[role].name)
-		checklistContainer.append('div')
-			.attr('id', 'name').attr('class', 'counter-claim')
-			.html('-')
-		checklistContainer.append('div')
-			.attr('id', 'count').attr('class', 'counter-count')
-			.html(booleanLookup['false'])
+		let slot = document.createElement('div')
+			slot.id = roleName
+			slot.className = 'counter-name'
+			slot.innerHTML = roleName
+			button.appendChild(slot)
+
+		let claim = document.createElement('div')
+			claim.className = 'counter-claim'
+			claim.innerHTML = '-'
+			button.appendChild(claim)
+
+		buttonGroups[uID].appendChild(button)
+	}
+
+	for (let buttonGroup in buttonGroups) {
+		data.appendChild(buttonGroups[buttonGroup])
 	}
 }
 
 Game.prototype.update = function() {
 	for (let role in this.roles) {
-		d3.select('body').select('.counterContainer').select(`#${role}`).select('#count')
-			.html(booleanLookup[this.roles[role].claimed])
-
-		let d = d3.select('body').select('.counterContainer').select(`#${role}`).select('.counter-claim')
-			.html(this.roles[role].claim || '-')
+		$(`.page .data #${role} .counter-claim`).html(`${this.roles[role].claim || '-'}`)
 	}
 }
 Game.prototype.addRole = function(roleName) {
@@ -197,3 +250,4 @@ Game.prototype.subRole = function(roleName) {
 }
 
 let page = new Page('Classic')
+page.construct()
